@@ -11,20 +11,24 @@
 <div class="app">
 
 <header>
-    <h1>⚡ Mis Links</h1>
-    <button id="temas">🎨</button>
+    <h1>⚡ Links Pro</h1>
+    <div>
+        <button id="temas">🎨</button>
+        <button id="loginBtn">Login</button>
+        <button id="logoutBtn">Logout</button>
+    </div>
 </header>
 
 <input id="buscador" placeholder="Buscar link...">
 <div id="resultados"></div>
 
-<button id="crearLink" class="crear">+ Nuevo Link</button>
+<button id="crearLink">+ Nuevo Link</button>
 
 <div id="links" class="links-grid"></div>
 
 </div>
 
-<!-- MODAL -->
+<!-- MODAL LINK -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <h2 id="modalTitulo">Nuevo Link</h2>
@@ -37,8 +41,20 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- MODAL LOGIN -->
+<div id="modalLogin" class="modal">
+    <div class="modal-content">
+        <h2>Login / Registro</h2>
+        <input id="emailInput" placeholder="Email">
+        <input id="passwordInput" type="password" placeholder="Password">
+        <div class="modal-buttons">
+            <button id="entrar">Entrar</button>
+            <button id="registrar">Registrar</button>
+        </div>
+    </div>
+</div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="script.js"></script>
 </body>
 </html>
