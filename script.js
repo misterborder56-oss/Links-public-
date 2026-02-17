@@ -1,78 +1,61 @@
+/* ===== SUPABASE ===== */
 const supabaseUrl = "https://molbmjwxojrjkyxatebc.supabase.co";
 const supabaseKey = "sb_publishable_7zCY2tTeUi61lhZlGgwEMw_io7eXi3H";
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-/* ELEMENTOS */
-const linksContainer = document.getElementById("links");
-const crearBtn = document.getElementById("crearLink");
-const temasBtn = document.getElementById("temas");
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
+/* ===== ELEMENTOS ===== */
+const contenedorLinks = document.getElementById("links");
+const botonCrear = document.getElementById("crearLink");
+const botonTema = document.getElementById("temas");
+const buscador = document.getElementById("buscador");
+const resultados = document.getElementById("resultados");
 
 const modal = document.getElementById("modal");
 const nombreInput = document.getElementById("nombreInput");
 const urlInput = document.getElementById("urlInput");
 const guardarBtn = document.getElementById("guardar");
 const cancelarBtn = document.getElementById("cancelar");
-
-const modalLogin = document.getElementById("modalLogin");
-const emailInput = document.getElementById("emailInput");
-const passwordInput = document.getElementById("passwordInput");
-const entrarBtn = document.getElementById("entrar");
-const registrarBtn = document.getElementById("registrar");
+const modalTitulo = document.getElementById("modalTitulo");
 
 let editandoId = null;
 
 /* ===== TEMAS ===== */
-const temas = ["neon","oscuro","claro"];
+const temas = ["neon", "oscuro", "claro"];
 let temaActual = 0;
 
-temasBtn.onclick = () => {
+botonTema.onclick = () => {
     temaActual++;
     if (temaActual >= temas.length) temaActual = 0;
     document.body.className = temas[temaActual];
-    localStorage.setItem("tema", temas[temaActual]);
+    localStorage.setItem("temaGuardado", temas[temaActual]);
 };
 
-window.onload = async () => {
-    const guardado = localStorage.getItem("tema");
-    if (guardado) document.body.className = guardado;
-    cargarLinks();
-};
-
-/* ===== AUTH ===== */
-
-loginBtn.onclick = () => modalLogin.style.display = "flex";
-
-logoutBtn.onclick = async () => {
-    await supabaseClient.auth.signOut();
-    alert("Sesión cerrada");
-};
-
-entrarBtn.onclick = async () => {
-    await supabaseClient.auth.signInWithPassword({
-        email: emailInput.value,
-        password: passwordInput.value
-    });
-    modalLogin.style.display = "none";
-};
-
-registrarBtn.onclick = async () => {
-    await supabaseClient.auth.signUp({
-        email: emailInput.value,
-        password: passwordInput.value
-    });
-    alert("Usuario registrado");
-};
+window.addEventListener("load", () => {
+    const guardado = localStorage.getItem("temaGuardado");
+    if (guardado) {
+        document.body.className = guardado;
+        temaActual = temas.indexOf(guardado);
+    }
+});
 
 /* ===== CARGAR LINKS ===== */
 async function cargarLinks() {
-    const { data } = await supabaseClient.from("links").select("*");
+    const { data, error } = await supabaseClient
+        .from("links")
+        .select("*")
+        .order("id", { ascending: true });
+
+    if (error) {
+        console.log("Error:", error);
+        return;
+    }
+
     mostrarLinks(data);
 }
 
+/* ===== MOSTRAR LINKS ===== */
 function mostrarLinks(lista) {
-    linksContainer.innerHTML = "";
+    contenedorLinks.innerHTML = "";
 
     lista.forEach(link => {
 
@@ -83,8 +66,10 @@ function mostrarLinks(lista) {
         a.href = link.url;
         a.target = "_blank";
         a.textContent = link.nombre;
+
         card.appendChild(a);
 
+        // SOLO PERMITIR EDITAR SI NO ES FIJO
         if (!link.fijo) {
 
             const botones = document.createElement("div");
@@ -94,63 +79,75 @@ function mostrarLinks(lista) {
             editar.textContent = "Editar";
             editar.onclick = () => {
                 modal.style.display = "flex";
+                modalTitulo.textContent = "Editar Link";
                 nombreInput.value = link.nombre;
                 urlInput.value = link.url;
                 editandoId = link.id;
             };
 
-            const eliminar = document.createElement("button");
-            eliminar.textContent = "Eliminar";
-            eliminar.onclick = async () => {
-                await supabaseClient.from("links").delete().eq("id", link.id);
-                cargarLinks();
-            };
-
             botones.appendChild(editar);
-            botones.appendChild(eliminar);
             card.appendChild(botones);
         }
 
-        linksContainer.appendChild(card);
+        contenedorLinks.appendChild(card);
     });
 }
 
-/* ===== CREAR / EDITAR ===== */
-
-crearBtn.onclick = () => {
+/* ===== ABRIR MODAL ===== */
+botonCrear.onclick = () => {
     modal.style.display = "flex";
-    editandoId = null;
+    modalTitulo.textContent = "Nuevo Link";
     nombreInput.value = "";
     urlInput.value = "";
+    editandoId = null;
 };
 
+/* ===== GUARDAR ===== */
 guardarBtn.onclick = async () => {
+    const nombre = nombreInput.value;
+    const url = urlInput.value;
 
-    const { data: { user } } = await supabaseClient.auth.getUser();
-
-    if (!user) {
-        alert("Debes iniciar sesión");
-        return;
-    }
+    if (!nombre || !url) return;
 
     if (editandoId) {
         await supabaseClient
             .from("links")
-            .update({ nombre: nombreInput.value, url: urlInput.value })
+            .update({ nombre, url })
             .eq("id", editandoId);
     } else {
         await supabaseClient
             .from("links")
-            .insert([{
-                nombre: nombreInput.value,
-                url: urlInput.value,
-                fijo: false,
-                user_id: user.id
-            }]);
+            .insert([{ nombre, url, fijo: false }]);
     }
 
     modal.style.display = "none";
     cargarLinks();
 };
 
-cancelarBtn.onclick = () => modal.style.display = "none";
+/* ===== CANCELAR MODAL ===== */
+cancelarBtn.onclick = () => {
+    modal.style.display = "none";
+};
+
+/* ===== BUSCADOR ===== */
+buscador.addEventListener("input", async () => {
+    const texto = buscador.value.toLowerCase();
+
+    const { data } = await supabaseClient
+        .from("links")
+        .select("*");
+
+    resultados.innerHTML = "";
+
+    data.forEach(link => {
+        if (link.nombre.toLowerCase().includes(texto)) {
+            const item = document.createElement("div");
+            item.textContent = link.nombre;
+            item.style.cursor = "pointer";
+            item.onclick = () => window.open(link.url, "_blank");
+            resultados.appendChild(item);
+        }
+    });
+});
+
+cargarLinks();
