@@ -20,8 +20,7 @@ const modalTitulo = document.getElementById("modalTitulo");
 let editandoId = null;
 
 /* ===== TEMAS ===== */
-const temas = ["neon", "oscuro", "claro"];
-let temaActual = 0;
+const temas = ["neon", "morado", "verde", "rosa", "naranja", "oscuro", "claro"];
 
 botonTema.onclick = () => {
     temaActual++;
