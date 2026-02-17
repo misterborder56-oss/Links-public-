@@ -8,7 +8,7 @@ body {
     transition: 0.4s;
 }
 
-/* ===== APP ===== */
+/* ===== APP CONTAINER ===== */
 .app {
     padding: 15px;
     max-width: 600px;
@@ -23,6 +23,7 @@ header {
 }
 
 /* ===== TEMAS ===== */
+
 body.neon {
     background: black;
     color: #00f7ff;
@@ -39,14 +40,16 @@ body.claro {
 }
 
 /* ===== BOTONES ===== */
+
 button {
     padding: 10px;
-    border-radius: 12px;
+    border-radius: 14px;
     border: 2px solid currentColor;
     background: transparent;
     color: inherit;
     cursor: pointer;
     transition: 0.3s;
+    font-weight: bold;
 }
 
 button:hover {
@@ -54,9 +57,11 @@ button:hover {
 }
 
 /* ===== NEÓN AVANZADO ===== */
+
 body.neon button,
 body.neon .card,
-body.neon input {
+body.neon input,
+body.neon .modal-content {
     box-shadow:
         0 0 5px #00f7ff,
         0 0 15px #00f7ff,
@@ -64,17 +69,32 @@ body.neon input {
 }
 
 /* ===== INPUT ===== */
+
 input {
     width: 100%;
     padding: 12px;
     margin: 10px 0;
-    border-radius: 12px;
+    border-radius: 14px;
     border: 2px solid currentColor;
     background: transparent;
     color: inherit;
+    font-size: 14px;
 }
 
-/* ===== GRID ===== */
+/* ===== RESULTADOS BUSCADOR ===== */
+
+#resultados {
+    margin-top: 5px;
+}
+
+#resultados div {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid currentColor;
+}
+
+/* ===== GRID LINKS ===== */
+
 .links-grid {
     display: grid;
     gap: 15px;
@@ -82,6 +102,7 @@ input {
 }
 
 /* ===== CARD ===== */
+
 .card {
     padding: 15px;
     border-radius: 20px;
@@ -99,6 +120,7 @@ input {
     font-weight: bold;
     display: block;
     margin-bottom: 10px;
+    font-size: 16px;
 }
 
 .card-buttons {
@@ -107,6 +129,7 @@ input {
 }
 
 /* ===== MODAL ===== */
+
 .modal {
     position: fixed;
     inset: 0;
@@ -123,9 +146,6 @@ input {
     width: 90%;
     max-width: 400px;
     border: 2px solid #00f7ff;
-    box-shadow:
-        0 0 10px #00f7ff,
-        0 0 30px #00f7ff;
 }
 
 .modal-buttons {
@@ -133,3 +153,21 @@ input {
     gap: 10px;
     margin-top: 10px;
 }
+
+/* ===== RESPONSIVE EXTRA ===== */
+
+@media (max-width: 480px) {
+
+    h1 {
+        font-size: 18px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .card a {
+        font-size: 14px;
+    }
+    }
