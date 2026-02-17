@@ -1,10 +1,12 @@
+/* ===== SUPABASE ===== */
 const supabaseUrl = "https://molbmjwxojrjkyxatebc.supabase.co";
 const supabaseKey = "sb_publishable_7zCY2tTeUi61lhZlGgwEMw_io7eXi3H";
-
 const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
+/* ===== ELEMENTOS ===== */
 const contenedorLinks = document.getElementById("links");
 const botonCrear = document.getElementById("crearLink");
+const botonTema = document.getElementById("temas");
 const buscador = document.getElementById("buscador");
 const resultados = document.getElementById("resultados");
 
@@ -17,7 +19,26 @@ const modalTitulo = document.getElementById("modalTitulo");
 
 let editandoId = null;
 
-/* ===== CARGAR LINKS DESDE SUPABASE ===== */
+/* ===== TEMAS ===== */
+const temas = ["neon", "oscuro", "claro"];
+let temaActual = 0;
+
+botonTema.onclick = () => {
+    temaActual++;
+    if (temaActual >= temas.length) temaActual = 0;
+    document.body.className = temas[temaActual];
+    localStorage.setItem("temaGuardado", temas[temaActual]);
+};
+
+window.addEventListener("load", () => {
+    const guardado = localStorage.getItem("temaGuardado");
+    if (guardado) {
+        document.body.className = guardado;
+        temaActual = temas.indexOf(guardado);
+    }
+});
+
+/* ===== CARGAR LINKS ===== */
 async function cargarLinks() {
     const { data, error } = await supabaseClient
         .from("links")
@@ -25,7 +46,7 @@ async function cargarLinks() {
         .order("id", { ascending: true });
 
     if (error) {
-        console.log(error);
+        console.log("Error:", error);
         return;
     }
 
@@ -83,7 +104,7 @@ function mostrarLinks(lista) {
     });
 }
 
-/* ===== CREAR LINK ===== */
+/* ===== ABRIR MODAL ===== */
 botonCrear.onclick = () => {
     modal.style.display = "flex";
     modalTitulo.textContent = "Nuevo Link";
@@ -114,6 +135,11 @@ guardarBtn.onclick = async () => {
     cargarLinks();
 };
 
+/* ===== CANCELAR MODAL ===== */
+cancelarBtn.onclick = () => {
+    modal.style.display = "none";
+};
+
 /* ===== BUSCADOR ===== */
 buscador.addEventListener("input", async () => {
     const texto = buscador.value.toLowerCase();
@@ -134,10 +160,5 @@ buscador.addEventListener("input", async () => {
         }
     });
 });
-
-/* ===== CERRAR MODAL ===== */
-cancelarBtn.onclick = () => {
-    modal.style.display = "none";
-};
 
 cargarLinks();
