@@ -8,7 +8,7 @@ body {
     transition: 0.4s;
 }
 
-/* ===== APP CONTAINER ===== */
+/* ===== APP ===== */
 .app {
     padding: 15px;
     max-width: 600px;
@@ -22,18 +22,45 @@ header {
     align-items: center;
 }
 
-/* ===== TEMAS ===== */
+/* ================= TEMAS ================= */
 
+/* 🔵 NEON AZUL */
 body.neon {
     background: black;
     color: #00f7ff;
 }
 
+/* 💜 NEON MORADO */
+body.morado {
+    background: black;
+    color: #bb00ff;
+}
+
+/* 💚 NEON VERDE */
+body.verde {
+    background: black;
+    color: #00ff88;
+}
+
+/* 💗 NEON ROSA */
+body.rosa {
+    background: black;
+    color: #ff008c;
+}
+
+/* 🟠 NEON NARANJA */
+body.naranja {
+    background: black;
+    color: #ff6a00;
+}
+
+/* ⚫ OSCURO */
 body.oscuro {
     background: #121212;
     color: white;
 }
 
+/* ⚪ CLARO */
 body.claro {
     background: #f2f2f2;
     color: black;
@@ -56,16 +83,33 @@ button:hover {
     transform: scale(1.05);
 }
 
-/* ===== NEÓN AVANZADO ===== */
+/* ===== NEON GLOW AVANZADO ===== */
 
 body.neon button,
 body.neon .card,
 body.neon input,
-body.neon .modal-content {
+body.neon .modal-content,
+body.morado button,
+body.morado .card,
+body.morado input,
+body.morado .modal-content,
+body.verde button,
+body.verde .card,
+body.verde input,
+body.verde .modal-content,
+body.rosa button,
+body.rosa .card,
+body.rosa input,
+body.rosa .modal-content,
+body.naranja button,
+body.naranja .card,
+body.naranja input,
+body.naranja .modal-content {
     box-shadow:
-        0 0 5px #00f7ff,
-        0 0 15px #00f7ff,
-        0 0 30px #00f7ff;
+        0 0 5px currentColor,
+        0 0 15px currentColor,
+        0 0 30px currentColor,
+        0 0 60px currentColor;
 }
 
 /* ===== INPUT ===== */
@@ -81,7 +125,7 @@ input {
     font-size: 14px;
 }
 
-/* ===== RESULTADOS BUSCADOR ===== */
+/* ===== RESULTADOS ===== */
 
 #resultados {
     margin-top: 5px;
@@ -93,7 +137,7 @@ input {
     border-bottom: 1px solid currentColor;
 }
 
-/* ===== GRID LINKS ===== */
+/* ===== GRID ===== */
 
 .links-grid {
     display: grid;
@@ -120,12 +164,6 @@ input {
     font-weight: bold;
     display: block;
     margin-bottom: 10px;
-    font-size: 16px;
-}
-
-.card-buttons {
-    display: flex;
-    gap: 10px;
 }
 
 /* ===== MODAL ===== */
@@ -145,29 +183,11 @@ input {
     border-radius: 20px;
     width: 90%;
     max-width: 400px;
-    border: 2px solid #00f7ff;
+    border: 2px solid currentColor;
 }
 
 .modal-buttons {
     display: flex;
     gap: 10px;
     margin-top: 10px;
-}
-
-/* ===== RESPONSIVE EXTRA ===== */
-
-@media (max-width: 480px) {
-
-    h1 {
-        font-size: 18px;
-    }
-
-    button {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    .card a {
-        font-size: 14px;
-    }
     }
