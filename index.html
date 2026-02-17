@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Links Pro</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="neon">
+
+<div class="app">
+
+<header>
+    <h1>⚡ Mis Links</h1>
+    <button id="temas">🎨</button>
+</header>
+
+<input id="buscador" placeholder="Buscar link...">
+<div id="resultados"></div>
+
+<button id="crearLink" class="crear">+ Nuevo Link</button>
+
+<div id="links" class="links-grid"></div>
+
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalTitulo">Nuevo Link</h2>
+        <input id="nombreInput" placeholder="Nombre">
+        <input id="urlInput" placeholder="https://...">
+        <div class="modal-buttons">
+            <button id="guardar">Guardar</button>
+            <button id="cancelar">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="script.js"></script>
+</body>
+</html>

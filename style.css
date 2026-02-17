@@ -1,0 +1,135 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    transition: 0.4s;
+}
+
+/* ===== APP ===== */
+.app {
+    padding: 15px;
+    max-width: 600px;
+    margin: auto;
+}
+
+/* ===== HEADER ===== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ===== TEMAS ===== */
+body.neon {
+    background: black;
+    color: #00f7ff;
+}
+
+body.oscuro {
+    background: #121212;
+    color: white;
+}
+
+body.claro {
+    background: #f2f2f2;
+    color: black;
+}
+
+/* ===== BOTONES ===== */
+button {
+    padding: 10px;
+    border-radius: 12px;
+    border: 2px solid currentColor;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* ===== NEÓN AVANZADO ===== */
+body.neon button,
+body.neon .card,
+body.neon input {
+    box-shadow:
+        0 0 5px #00f7ff,
+        0 0 15px #00f7ff,
+        0 0 30px #00f7ff;
+}
+
+/* ===== INPUT ===== */
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 12px;
+    border: 2px solid currentColor;
+    background: transparent;
+    color: inherit;
+}
+
+/* ===== GRID ===== */
+.links-grid {
+    display: grid;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+/* ===== CARD ===== */
+.card {
+    padding: 15px;
+    border-radius: 20px;
+    border: 2px solid currentColor;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+/* ===== MODAL ===== */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: black;
+    padding: 20px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    border: 2px solid #00f7ff;
+    box-shadow:
+        0 0 10px #00f7ff,
+        0 0 30px #00f7ff;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
